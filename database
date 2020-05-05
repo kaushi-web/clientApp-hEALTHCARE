@@ -1,1 +1,342 @@
 
+-- phpMyAdmin SQL Dump
+-- version 5.0.1
+-- https://www.phpmyadmin.net/
+--
+-- Host: 127.0.0.1
+-- Generation Time: May 06, 2020 at 12:10 AM
+-- Server version: 10.4.11-MariaDB
+-- PHP Version: 7.4.3
+
+SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+SET AUTOCOMMIT = 0;
+START TRANSACTION;
+SET time_zone = "+00:00";
+
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!40101 SET NAMES utf8mb4 */;
+
+--
+-- Database: `paf`
+--
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `appointments`
+--
+
+CREATE TABLE `appointments` (
+  `appointment_id` int(11) NOT NULL,
+  `ref_id` int(11) DEFAULT NULL,
+  `user_id` int(11) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `appointments`
+--
+
+INSERT INTO `appointments` (`appointment_id`, `ref_id`, `user_id`) VALUES
+(1, 1, 1),
+(2, 2, 12),
+(3, 1, 4);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `appointment_room`
+--
+
+CREATE TABLE `appointment_room` (
+  `appointment_room_id` varchar(100) NOT NULL,
+  `description` varchar(45) DEFAULT NULL,
+  `hospital_ID` int(11) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `appointment_room`
+--
+
+INSERT INTO `appointment_room` (`appointment_room_id`, `description`, `hospital_ID`) VALUES
+('AHC001', 'NEPHROLOGIST', 2),
+('AHC002', 'ONCOLOGY', 2),
+('AHM001', 'CONSULTANT', 6),
+('DH001', 'CARDIOLOGISTS', 5),
+('DH002', 'ONCOLOGY', 5),
+('KPH001', 'DENTISTS', 1),
+('KPH002', 'CARDIOLOGISTS', 1),
+('LH001', 'NEPHROLOGIST', 4),
+('LH002', 'PULMONOLOGIST', 4),
+('NH001', 'PULMONOLOGIST', 3),
+('NH002', 'CARDIOLOGISTS', 3);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `appointment_view`
+--
+
+CREATE TABLE `appointment_view` (
+  `ref_id` int(11) NOT NULL,
+  `doctor_id` int(11) NOT NULL,
+  `doctor_name` varchar(255) DEFAULT NULL,
+  `hospital_id` int(11) NOT NULL,
+  `name` varchar(255) DEFAULT NULL,
+  `appointment_time` varchar(30) NOT NULL,
+  `appointment_date` varchar(30) NOT NULL,
+  `WardNo` varchar(10) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `appointment_view`
+--
+
+INSERT INTO `appointment_view` (`ref_id`, `doctor_id`, `doctor_name`, `hospital_id`, `name`, `appointment_time`, `appointment_date`, `WardNo`) VALUES
+(1, 1, 'Dr.Nalin Wijekoon', 1, 'Kandy Private Hospital', '18-30.00', '2020-05-03', 'LH001'),
+(2, 7, 'Dr. Jagath Ranaweera', 5, 'Durdans Hospital', '17-00.00', '2020-04-20', 'DH002');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `doctor`
+--
+
+CREATE TABLE `doctor` (
+  `doctor_id` int(11) NOT NULL,
+  `doctor_name` varchar(255) NOT NULL,
+  `specialization` varchar(255) NOT NULL,
+  `regNo` int(11) NOT NULL,
+  `address` varchar(255) NOT NULL,
+  `phone` varchar(15) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `doctor`
+--
+
+INSERT INTO `doctor` (`doctor_id`, `doctor_name`, `specialization`, `regNo`, `address`, `phone`) VALUES
+(1, 'Dr.Nalin Wijekoon', 'Heart Surgeon', 12, 'Colombo', '0111234321'),
+(2, 'Dr.Saman Senanayaka', 'Eye Specialist', 13, 'Kandy', '0711234567'),
+(3, 'Dr. Manil Peiris', 'Chest specialist', 14, 'Kandy', '0771234567'),
+(4, 'Dr. Anura Kularathna', 'VP', 15, 'Matale', '0773429181'),
+(5, 'Dr. Janaka Rambukwella', 'VOG', 16, 'Kurunegala', '071123456'),
+(6, 'Dr. Shantha Disanayaka', 'ENT', 16, 'Colombo', '0117894561'),
+(7, 'Dr. Jagath Ranaweera', 'VP', 17, 'Kandy', '0811234567'),
+(8, 'Dr. Sampath Perera', 'Cancer specialist', 19, 'Kandy', '0777456987'),
+(9, 'Dr. Vindya Silva', 'MLT', 13, 'Colombo', '0777852369'),
+(10, 'Dr. Kalindu Weerasinghe', 'Psychiatrist', 15, 'Galle', '0701741258');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `hospital`
+--
+
+CREATE TABLE `hospital` (
+  `hospital_id` int(11) NOT NULL,
+  `name` varchar(255) NOT NULL,
+  `address` varchar(255) NOT NULL,
+  `phone` varchar(15) NOT NULL,
+  `email` varchar(255) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `hospital`
+--
+
+INSERT INTO `hospital` (`hospital_id`, `name`, `address`, `phone`, `email`) VALUES
+(1, 'Kandy Private Hospital', 'No.110,Kandy Road, Mapanawathura', '811234567', 'kph@gmail.com'),
+(2, 'Asiri Hospital', 'No.12,kirimandala road, kirulapana', '112349567', 'asirihospital@gmail.com'),
+(3, 'Nawaloka Hospital', 'No.169,Colombo Rd,Negambo', '315777773', 'nawaloka20@gmail.com'),
+(4, 'Lanka Hospitals', '578 Elvitigala Mawatha, Colombo 00500', '11234877', 'lankahospital@gmail.com'),
+(5, 'Durdans Hospital', '3 Alfred Pl, Colombo 00300', '112140000', 'durdanshospital@gmail.com'),
+(6, 'Asiri Hospital Matara', 'No 26, Esplanade Rd Uyanwatta, 81000', '4175505540', 'asirihospital@gmail.com');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `payment`
+--
+
+CREATE TABLE `payment` (
+  `payment_id` int(5) NOT NULL,
+  `user_id` int(11) NOT NULL,
+  `appointment_id` int(11) DEFAULT NULL,
+  `Payment_method` varchar(255) NOT NULL,
+  `paid_time` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  `purpose` varchar(255) NOT NULL,
+  `amount` float NOT NULL,
+  `status` varchar(255) NOT NULL DEFAULT 'pending'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `payment`
+--
+
+INSERT INTO `payment` (`payment_id`, `user_id`, `appointment_id`, `Payment_method`, `paid_time`, `purpose`, `amount`, `status`) VALUES
+(22, 4, 1, 'Cash', '2020-05-05 21:41:47', 'parmacy+bill', 198, 'pending'),
+(23, 4, 1, 'Card', '2020-04-22 09:58:29', 'channel1', 1600, 'cancel'),
+(24, 4, 1, 'Card', '2020-05-05 21:42:19', 'pr', 1600, 'pending'),
+(25, 1, 1, 'Card', '2020-05-05 17:38:34', 'dfdfs', 121, '1'),
+(27, 1, 2, 'Cash', '2020-05-05 19:43:43', 'kjctjv', 123, '1'),
+(32, 1, 1, 'cash', '2020-05-05 20:03:12', 'cbfbghg', 123, 'paid'),
+(39, 1, 1, 'Cash', '2020-05-05 21:42:49', 'www', 400, 'pending');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `users`
+--
+
+CREATE TABLE `users` (
+  `user_id` int(11) NOT NULL,
+  `username` varchar(255) NOT NULL,
+  `phoneNo` varchar(15) NOT NULL,
+  `age` int(11) NOT NULL,
+  `address` varchar(255) NOT NULL,
+  `gender` varchar(10) NOT NULL,
+  `email` varchar(255) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `users`
+--
+
+INSERT INTO `users` (`user_id`, `username`, `phoneNo`, `age`, `address`, `gender`, `email`) VALUES
+(1, 'Sanath Jayasuriya', '07123213', 45, 'No:2,Baseline Road,Colombo.', 'Male', 'sanathj@gmail.com'),
+(2, 'Aravinda De Silva', '075678232', 47, 'N0:45,Kaluthara.', 'Male', 'Aravinda@yahoo.com'),
+(4, 'Chamari Atapaththu', '075681234', 34, 'No:4,Maharagama,Pannipitiya.', 'Female', 'chamari@gmail.com'),
+(5, 'Sachithra Senanayake', '073456789', 29, 'No:45,Yakkala,Gampaha.', 'Male', 'sachithra@gmail.com'),
+(6, 'Ajantha Mendis', '078345255', 37, 'Alawalla Road,Mathara.', 'Male', 'ajantham@gmail.com'),
+(7, 'Jehan Mubarak', '076234578', 34, 'No:15,Negambo.', 'Male', 'jehan@gmail.com'),
+(8, 'Shashikala Siriwardena', '011345466', 32, 'No:3,Borella,Colombo 8.', 'Female', 'shashikala@gmail.com'),
+(9, 'Kalani Perera', '073456789', 24, 'No:45,1st lane,Kurunegala.', 'Female', 'kalani@gmail.com'),
+(10, 'Rangana Herath', '078457459', 40, 'No:8,Kottawa.', 'Male', 'rangana@gmail.com'),
+(11, 'Shanika Wijerathne', '072756479', 26, 'No:22,3rd lane,Colombo 5.', 'Female', 'shanika@gmail.com'),
+(12, 'Shone Chathushka', '0755099051', 26, 'Nugegoda', 'Male', 'cs@gmail.com');
+
+--
+-- Indexes for dumped tables
+--
+
+--
+-- Indexes for table `appointments`
+--
+ALTER TABLE `appointments`
+  ADD PRIMARY KEY (`appointment_id`),
+  ADD KEY `user_fk` (`user_id`),
+  ADD KEY `ref_fk` (`ref_id`);
+
+--
+-- Indexes for table `appointment_room`
+--
+ALTER TABLE `appointment_room`
+  ADD PRIMARY KEY (`appointment_room_id`),
+  ADD KEY `hospital_id_fk` (`hospital_ID`);
+
+--
+-- Indexes for table `appointment_view`
+--
+ALTER TABLE `appointment_view`
+  ADD PRIMARY KEY (`ref_id`),
+  ADD KEY `doctor_V_fk` (`doctor_id`),
+  ADD KEY `hospital_V_fk` (`hospital_id`);
+
+--
+-- Indexes for table `doctor`
+--
+ALTER TABLE `doctor`
+  ADD PRIMARY KEY (`doctor_id`);
+
+--
+-- Indexes for table `hospital`
+--
+ALTER TABLE `hospital`
+  ADD PRIMARY KEY (`hospital_id`);
+
+--
+-- Indexes for table `payment`
+--
+ALTER TABLE `payment`
+  ADD PRIMARY KEY (`payment_id`),
+  ADD KEY `appointments_fk` (`appointment_id`),
+  ADD KEY `appointmentsusr_fk` (`user_id`);
+
+--
+-- Indexes for table `users`
+--
+ALTER TABLE `users`
+  ADD PRIMARY KEY (`user_id`);
+
+--
+-- AUTO_INCREMENT for dumped tables
+--
+
+--
+-- AUTO_INCREMENT for table `appointments`
+--
+ALTER TABLE `appointments`
+  MODIFY `appointment_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
+--
+-- AUTO_INCREMENT for table `appointment_view`
+--
+ALTER TABLE `appointment_view`
+  MODIFY `ref_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
+-- AUTO_INCREMENT for table `doctor`
+--
+ALTER TABLE `doctor`
+  MODIFY `doctor_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+
+--
+-- AUTO_INCREMENT for table `payment`
+--
+ALTER TABLE `payment`
+  MODIFY `payment_id` int(5) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=40;
+
+--
+-- AUTO_INCREMENT for table `users`
+--
+ALTER TABLE `users`
+  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+
+--
+-- Constraints for dumped tables
+--
+
+--
+-- Constraints for table `appointments`
+--
+ALTER TABLE `appointments`
+  ADD CONSTRAINT `ref_fk` FOREIGN KEY (`ref_id`) REFERENCES `appointment_view` (`ref_id`),
+  ADD CONSTRAINT `user_fk` FOREIGN KEY (`user_id`) REFERENCES `users` (`user_id`);
+
+--
+-- Constraints for table `appointment_room`
+--
+ALTER TABLE `appointment_room`
+  ADD CONSTRAINT `hospital_id_fk` FOREIGN KEY (`hospital_ID`) REFERENCES `hospital` (`hospital_id`);
+
+--
+-- Constraints for table `appointment_view`
+--
+ALTER TABLE `appointment_view`
+  ADD CONSTRAINT `doctor_V_fk` FOREIGN KEY (`doctor_id`) REFERENCES `doctor` (`doctor_id`),
+  ADD CONSTRAINT `hospital_V_fk` FOREIGN KEY (`hospital_id`) REFERENCES `hospital` (`hospital_id`);
+
+--
+-- Constraints for table `payment`
+--
+ALTER TABLE `payment`
+  ADD CONSTRAINT `appointments_fk` FOREIGN KEY (`appointment_id`) REFERENCES `appointments` (`appointment_id`),
+  ADD CONSTRAINT `appointmentsusr_fk` FOREIGN KEY (`user_id`) REFERENCES `appointments` (`user_id`);
+COMMIT;
+
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
